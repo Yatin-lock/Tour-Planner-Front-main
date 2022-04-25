@@ -1,0 +1,10 @@
+.login-pages{
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0,37,45);
+    background: linear-gradient(90deg, rgba(0,37,45,1) 11%, rgba(9,9,121,1) 50%, rgba(0,30,36,1) 90%);
+  }
+  
+.login-form{
+    margin-top: 10px;
+}

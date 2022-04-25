@@ -1,0 +1,41 @@
+
+.flexbox-container{
+    display: flex;
+justify-content: space-around;
+align-items: center;
+align-content: center;
+margin-top:30px;
+
+
+}
+
+
+.flexbox-item{
+    width:300px;
+    height:200px;
+    border:3px solid black;
+    background-color: white;
+    margin:5px;
+    
+}
+.flexbox-img{
+    height:100%;
+    width:100%;
+}
+.item2{
+    width:350px;
+    height:250px;
+    transition:  ease-in-out 700ms;
+}
+.item2:hover{
+    width:500px;
+    height:300px;
+}
+.item1{
+    transition:  ease-in-out 700ms;
+}
+.item1:hover{
+    width:450px;
+    height:270px;
+}
+
