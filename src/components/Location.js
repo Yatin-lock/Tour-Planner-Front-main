@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import {useParams} from 'react-router-dom'
 import Axios from 'axios';
 import '../css/Location.css'
-import FlashMessage from 'react-flash-message'
+import LocationCard from './LocationCard';
 function Location(){
     const params  = useParams();
     const [location,setLocation] = useState({});
+    const [ratings,setRating] = useState([]);
     const getLoc=()=>{
         Axios({
             method:"POST",
@@ -17,6 +18,7 @@ function Location(){
         })
         .then((res)=>{
             setLocation(res.data.data.loc)
+            console.log(location);
         })
         .catch((err)=>{
             console.log(err);
@@ -26,12 +28,8 @@ function Location(){
         getLoc();
     },[])
     return(
-        <div>
-            <FlashMessage duration={5000} persistOnHover={true}>
-                <div>
-                    Message
-                </div>
-            </FlashMessage>
+        <div className ="row col-lg-11 col-sm-12">
+            <LocationCard name={location.name} description={location.description} id = {location.id} />
         </div>
     )
 }   

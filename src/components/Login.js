@@ -59,8 +59,10 @@ function Login() {
       email: email,
       password: password,
     };
-    console.log(user);
+    ChangeEmail("");
+    ChangePassword("");
     Axios.defaults.withCredentials = true;
+
     Axios({
       method: "POST",
       withCredentials: true,
@@ -75,13 +77,12 @@ function Login() {
           history.push('/map')
         } else {
           setAuth(false);
+          console.log(auth);
         }
       })
       .catch(err => {
         console.log(err)
       })
-    ChangeEmail("");
-    ChangePassword("");
   }
   function handleClose() {
     setAuth(true);
@@ -105,9 +106,9 @@ function Login() {
               <h2>Sign In</h2>
             </Grid>
             <TextField label='Email' placeholder='Enter username' fullWidth required onChange={onChangeEmail}
-              error={!isValidEmail} helperText={!isValidEmail && "Type Correct Email address"}
+              error={!isValidEmail} value={email} helperText={!isValidEmail && "Type Correct Email address"}
             />
-            <TextField label='Password' placeholder='Enter password' type='password' fullWidth required onChange={onChangePassword} />
+            <TextField label='Password' value = {password} placeholder='Enter password' type='password' fullWidth required onChange={onChangePassword} />
             <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth disabled={!isValidEmail}>Sign in</Button>
             <Typography >
             </Typography>

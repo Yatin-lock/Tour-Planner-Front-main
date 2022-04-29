@@ -7,7 +7,7 @@ import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
 // import React,{useContext, useEffect} from  'react';
 import Location from './components/Location';
 // import Axios  from 'axios';
-
+import './App.css'
 function App() {
   // const userObject=useContext(myContext);
  

@@ -1,55 +1,61 @@
 import React from 'react';
 import '../css/nav.css';
 import Axios from 'axios';
-import {Link, useHistory} from 'react-router-dom'
-function Nav(){
+import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom'
+function Nav() {
   let history = useHistory();
-   const logout=(e)=>{
+  const [isNavTrigger,setNavTrigger] = useState(false);
+  const logout = (e) => {
     e.preventDefault();
-     Axios({
-       method: "POST",
-       withCredentials: true,
-       url:"http://localhost:4000/auth/logout"
-     }).then(res=>{
-       if(res.data.authenticated)
+    Axios({
+      method: "POST",
+      withCredentials: true,
+      url: "http://localhost:4000/auth/logout"
+    }).then(res => {
+      if (res.data.authenticated)
         history.push('/login');
-        else{
-          
-        }
-     }).catch(err=>{
-       console.log(err);
-     })
-   }
-    
-        return(
-          <nav class="navbar navbar-expand-lg navbar-dark nav_color">
-          <div class="container-fluid">
-            <h2 class=" " href="#">Tour Planner</h2>
-            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <Link class="nav-link active" aria-current="page" to="/">Home</Link>
-                </li>
-                <li class="nav-item">
-                  <Link class="nav-link" to="/login">Login</Link>
-                </li>
-                <li class="nav-item">
-                  <Link class="nav-link" to="/register">Register</Link>
-                </li>
-                <li class="nav-item">
-                  <Link class="nav-link" to="#" tabindex="-1" aria-disabled="true" onClick={logout}>Logout</Link>
-                </li>
-              </ul>
-              
-            </div>
-          </div>
-        </nav>
-  
-        )
-    
+      else {
+
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+  function handleCLickNavTrigger(){
+    setNavTrigger(!isNavTrigger);
+    console.log('nav trigger');
+  }
+  return (
+    <nav class="navbar navbar-expand-lg navbar-dark nav_color">
+    <div class="container-fluid ">
+      <h2 class="" href="#">Tour Planner</h2>
+      <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <Link class="nav-link active" aria-current="page" to="/">Home</Link>
+          </li>
+          <li class="nav-item">
+            <Link class="nav-link" to="/login">Login</Link>
+          </li>
+          <li class="nav-item">
+            <Link class="nav-link" to="/register">Register</Link>
+          </li>
+          {/* <li class="nav-item">
+            <Link class="nav-link" to="#" tabindex="-1" aria-disabled="true" onClick={logout}>Logout</Link>
+          </li> */}
+        </ul>
+        
+      </div>
+    </div>
+  </nav>
+
+
+  )
+
 }
 
 export default Nav;

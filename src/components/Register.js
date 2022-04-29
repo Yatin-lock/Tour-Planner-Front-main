@@ -90,7 +90,7 @@ function Register() {
           <Paper elevation={10} style={paperStyle}>
             <Grid align='center'>
               <Avatar style={avatarStyle}></Avatar>
-              <h2>Sign In</h2>
+              <h2>Sign Up</h2>
             </Grid>
             <TextField label='Email' placeholder='Enter username' fullWidth required onChange={onChangeEmail}
               error={!isValidEmail} helperText={!isValidEmail && "Type Correct Email address"}

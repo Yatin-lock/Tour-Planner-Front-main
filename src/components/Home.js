@@ -10,7 +10,7 @@ function Home(){
     return(
         <div>
      <Nav />
-     <Carousel/>
+     {/* <Carousel/> */}
      <FlexBox/>
      <Map />
      <ContactUs/>

@@ -52,7 +52,7 @@ function Map(){
       })
       .then((res)=>{
         setLocations(res.data);
-        console.log(1,locations);
+        // console.log(1,locations);
       })
       .catch((err)=>{
         console.log(err);
@@ -113,7 +113,7 @@ function Map(){
       async function getData(){
 
       }
-      console.log(locations)
+      // console.log(locations)
       const locs = locations.filter(location=>{
         if(distanceLatLongToKM(parseFloat(lat),location.geometry.coordinates[0],parseFloat(lng),location.geometry.coordinates[1])<=10 && numLocs<6){
           numLocs++;
@@ -155,7 +155,7 @@ function Map(){
         if(res.data.authenticated){
           
         }else{
-          console.log(res.data.msg);
+          // console.log(res.data.msg);
         }
       })
       setLocName("");
