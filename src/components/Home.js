@@ -8,8 +8,8 @@ import FlexBox from './FlexBox';
 
 function Home(){
     return(
-        <div>
-     <Nav />
+        <div style={{width:"80%",margin:"auto"}}>
+    <Nav/>
      {/* <Carousel/> */}
      <FlexBox/>
      <Map />
