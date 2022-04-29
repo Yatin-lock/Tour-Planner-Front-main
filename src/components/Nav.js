@@ -1,61 +1,60 @@
 import React from 'react';
+import { useState } from 'react';
 import '../css/nav.css';
 import Axios from 'axios';
-import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom'
-function Nav() {
+import {Link, useHistory} from 'react-router-dom'
+
+function Nav(){
   let history = useHistory();
-  const [isNavTrigger,setNavTrigger] = useState(false);
-  const logout = (e) => {
+   const logout=(e)=>{
     e.preventDefault();
-    Axios({
-      method: "POST",
-      withCredentials: true,
-      url: "http://localhost:4000/auth/logout"
-    }).then(res => {
-      if (res.data.authenticated)
+     Axios({
+       method: "POST",
+       withCredentials: true,
+       url:"http://localhost:4000/auth/logout"
+     }).then(res=>{
+       if(res.data.authenticated)
         history.push('/login');
-      else {
+        else{
+          
+        }
+     }).catch(err=>{
+       console.log(err);
+     })
+   }
+   const [isActive,setActive]=useState(true);
+const toggleClass=()=>{
+  setActive(!isActive);
 
-      }
-    }).catch(err => {
-      console.log(err);
-    })
-  }
-  function handleCLickNavTrigger(){
-    setNavTrigger(!isNavTrigger);
-    console.log('nav trigger');
-  }
-  return (
-    <nav class="navbar navbar-expand-lg navbar-dark nav_color">
-    <div class="container-fluid ">
-      <h2 class="" href="#">Tour Planner</h2>
-      <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <Link class="nav-link active" aria-current="page" to="/">Home</Link>
-          </li>
-          <li class="nav-item">
-            <Link class="nav-link" to="/login">Login</Link>
-          </li>
-          <li class="nav-item">
-            <Link class="nav-link" to="/register">Register</Link>
-          </li>
-          {/* <li class="nav-item">
-            <Link class="nav-link" to="#" tabindex="-1" aria-disabled="true" onClick={logout}>Logout</Link>
-          </li> */}
-        </ul>
-        
-      </div>
-    </div>
-  </nav>
-
-
-  )
-
+};
+    
+        return(
+          <div>
+          <nav class="nav"style={{width:"80%"}}>
+          <div class="container">
+              <div class="logo">
+                  <a href="#">Your Logo</a>
+              </div>
+              <div id="mainListDiv" className={isActive?"main_list":"show_list "}>
+                  <ul class="navlinks">
+                      <li><Link to="/">Home</Link></li>
+                      <li><Link to="/login">Login</Link></li>
+                      <li><Link to="/register">Register</Link></li>
+                      <li><Link to="/logout">Logout</Link></li>
+                  </ul>
+              </div>
+              <span className={isActive?"navTrigger":"active navTrigger"} onClick={toggleClass}>
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+          </div>
+      </nav>
+       <section class="home">
+       </section>
+       </div>
+        )
+    
 }
 
 export default Nav;

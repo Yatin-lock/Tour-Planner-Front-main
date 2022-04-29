@@ -90,7 +90,7 @@ function Register() {
       <div className="d-flex flex-column ">
         <Grid className="login-form">
           <Paper elevation={10} style={paperStyle}>
-            <Grid align='center'>
+            <Grid align='center' style={{paddingTop:"50px"}}>
               <Avatar style={avatarStyle}></Avatar>
               <h2>Sign Up</h2>
             </Grid>

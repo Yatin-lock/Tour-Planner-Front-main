@@ -99,9 +99,9 @@ function Login() {
   return (
     <div className="login-pages">
       <div className="d-flex flex-column align-items-center">
-        <Grid className="login-form">
+        <Grid className="login-form" >
           <Paper elevation={10} style={paperStyle}>
-            <Grid align='center'>
+            <Grid align='center'style={{paddingTop:"50px"}}>
               <Avatar style={avatarStyle}></Avatar>
               <h2>Sign In</h2>
             </Grid>
