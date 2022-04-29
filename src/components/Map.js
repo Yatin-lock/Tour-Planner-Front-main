@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import  { useRef, useEffect, useState } from 'react';
 import '../css/Map.css';
 import ReactMapGL from 'react-map-gl';
+import {MediaControlCardLeft,MediaControlCardRight} from './MapCard.js';
 
  const accessToken = 'pk.eyJ1Ijoic2hvcnlhMTgxOCIsImEiOiJja3RnMzhzZ2YwZWE3Mm5tdWFxY2VvZnptIn0.E-Vp4mQcmUZWVzQ-r6HhAg';
 
@@ -20,8 +21,8 @@ export default function Map(){
     
 
         return(
-            <div>
-            <div className="map-1">
+            <div >
+            {/* <div className="map-1">
                
             <ReactMapGL {...viewport} mapboxApiAccessToken={accessToken}
          
@@ -36,41 +37,13 @@ export default function Map(){
                        distribution of letters</p>
             </div>
            
-            </div>
-
-            <div className="map-1">
-            <div className="text-div">
-                    <h1>Singapore</h1>
-                    <p>it is a long established fact that a reader will be distracted by the readable content of a page
-                         when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                          distribution of letters</p>
-               </div>
-               <ReactMapGL {...viewport} mapboxApiAccessToken={accessToken}
+            </div> */}
+          <MediaControlCardLeft/>
+          <MediaControlCardRight/>
+          <MediaControlCardLeft/>
             
-               >
-          Marker Here
-               </ReactMapGL>
-               
+              
              
-              
-               </div>
-
-               <div className="map-1">
-               
-               <ReactMapGL {...viewport} mapboxApiAccessToken={accessToken}
-            
-               >
-          Marker Here
-               </ReactMapGL>
-               
-               <div className="text-div">
-                    <h1>Singapore</h1>
-                    <p>it is a long established fact that a reader will be distracted by the readable content of a page
-                         when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                          distribution of letters</p>
-               </div>
-              
-               </div>
             </div>
         )
     
