@@ -1,4 +1,4 @@
-import { Rating ,  Typography,Box } from "@mui/material";
+import { Rating ,Box } from "@mui/material";
 function RatingComp({rate,username,desc}){
     return(
         <Box>

@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { Alert } from "@mui/material";
 
 function Register() {
   let history = useHistory();
@@ -67,7 +68,8 @@ function Register() {
       .then((res) => {
         console.log(res.data);
         if (res.data.authenticated) {
-          history.push('/map')
+          alert("user registered redirecting to login page");
+          history.push('/login')
         }
         else {
           setAuth(false);
@@ -96,15 +98,15 @@ function Register() {
               error={!isValidEmail} helperText={!isValidEmail && "Type Correct Email address"}
             />
             <TextField label='Password' placeholder='Enter password' type='password' fullWidth required onChange={onChangePassword} />
-            <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth disabled={!isValidEmail}>Sign in</Button>
+            <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth disabled={!isValidEmail}>Sign Up</Button>
             <Typography > Do you have an account ?
               <Link to="/Login" >
                 Log In
               </Link>
             </Typography>
-            <Typography > 
+            <Typography >
               <Link to="/" >
-              Go back to home page
+                Go back to home page
               </Link>
             </Typography>
           </Paper>
@@ -115,7 +117,9 @@ function Register() {
           onClose={handleClose}
           message="User with email already registered"
           action={action}
-        />
+        >
+          <Alert severity="error">User already registered</Alert>
+        </Snackbar>
       </div>
     </div>
   );

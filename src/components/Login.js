@@ -6,12 +6,12 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { Alert } from "@mui/material";
 // import Avatar from '@mui/material/Avatar';
 // import LockOutlinedIcon from '@mui/icons/LockOutlined';
 
@@ -130,7 +130,9 @@ function Login() {
           onClose={handleClose}
           message="Incorrect username or password"
           action={action}
-        />
+        >
+          <Alert severity="error">Username or password incorrect</Alert>
+          </Snackbar>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Rating from '@mui/material/Rating'
-import { Button, Snackbar, TextField } from '@mui/material';
+import { Button, Paper, Snackbar, TextField } from '@mui/material';
 import Axios from "axios";
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -43,6 +43,7 @@ function LocationCard({ name, description, id }) {
   const [descVal, setDescVal] = useState("");
   const [isAdded, setIsAdded] = useState(false);
   const btnstyle = { margin: '8px 0' }
+  const paperStyle = { padding: 20, height: 'fit-content', width: '70vw', margin: "20px auto" }
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -124,91 +125,99 @@ function LocationCard({ name, description, id }) {
       .catch(err => {
         console.log(err)
       })
-      getRating()
+    getRating()
   }
-  React.useEffect(()=>{
+  React.useEffect(() => {
     getRating();
-  },[])
+  }, [])
   return (
-    <Card sx={{ maxWidth: 345 }} className="row col-lg-11 col-sm-12">
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {name && name[0]}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={name}
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        component="img"
-        height="194"
-        image="https://districts.ecourts.gov.in/sites/default/files/u806/rohini.JPG"
-        alt="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+    <Paper style={paperStyle} className="d-flex justify-content-center">
+      <Card sx={{ maxWidth: 345 }} className="row col-lg-11 col-sm-12 m-5">
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              {name && name[0]}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={name}
+          subheader="September 14, 2016"
+        />
+        <CardMedia
+          component="img"
+          height="194"
+          image="https://districts.ecourts.gov.in/sites/default/files/u806/rohini.JPG"
+          alt="Paella dish"
+        />
         <CardContent>
-          <Typography paragraph>
-            Rate this Place
-          </Typography>
-          <Typography paragraph>
-          </Typography>
-          <Typography className="rating-form">
-            <Typography paragraph>
-              <Rating
-                name="simple-controlled"
-                value={ratingVal}
-                onChange={(e, newVal) => {
-                  setRatingVal(newVal);
-                }}
-              />
-            </Typography>
-            <div>
-              <TextField
-                id="filled-multiline-flexible"
-                label="Multiline"
-                multiline
-                maxRows={4}
-                value={descVal}
-                onChange={handleDescValChange}
-                variant="filled"
-              />
-            </div>
-            <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth >Submit</Button>
-            <Typography>{displayRatings()}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {description}
           </Typography>
         </CardContent>
-      </Collapse>
+        <CardActions disableSpacing>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>
+              Rate this Place
+            </Typography>
+            <Typography paragraph>
+            </Typography>
+            <Typography className="rating-form">
+              <Typography paragraph>
+                <Rating
+                  name="simple-controlled"
+                  value={ratingVal}
+                  onChange={(e, newVal) => {
+                    setRatingVal(newVal);
+                  }}
+                />
+              </Typography>
+              <div>
+                <TextField
+                  id="filled-multiline-flexible"
+                  label="Leave your thoughts :)"
+                  multiline
+                  maxRows={4}
+                  value={descVal}
+                  onChange={handleDescValChange}
+                  variant="filled"
+                />
+              </div>
+              <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth >Submit</Button>
+              <Typography>{displayRatings()}</Typography>
+            </Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
+      <div className='mr-5'>
+        Upload images
+        <form>
+          <input type="file" />
+        </form>
+      </div>
       <Snackbar
         open={isAdded}
         autoHideDuration={6000}
         onClose={handleClose}
         message="Review posted"
         action={action} />
-    </Card>
+    </Paper>
   );
 }
 
