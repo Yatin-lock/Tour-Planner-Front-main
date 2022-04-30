@@ -7,7 +7,7 @@ function LoginToCont() {
         history.push('/');
     }
     return (
-        <div>
+        <div className='login-to-cont'>
             <body>
                 <div class="container">
                     <h1>Login to access <br/>this content </h1>

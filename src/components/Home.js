@@ -6,14 +6,13 @@ import ContactUs from './ContactUs';
 import FlexBox from './FlexBox';
 
 
-function Home(){
-    return(
-        <div style={{width:"80%",margin:"auto"}}>
-    <Nav/>
-     {/* <Carousel/> */}
-     <FlexBox/>
-     <Map />
-     <ContactUs/>
+function Home() {
+    return (
+        <div style={{ width: "80%", margin: "auto"}} className="home">
+            <Nav />
+            <FlexBox />
+            <Map />
+            <ContactUs />
         </div>
     )
 }
