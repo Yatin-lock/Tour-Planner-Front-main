@@ -173,7 +173,7 @@ function Map({user}) {
   // a component did update for map movend method future dev
   function availablePlaces(locs) {
     return (
-      <div className="row col-lg-11 col-sm-12" >
+      <div className=" row col-11 col-lg-11 col-sm-12" >
         {locs.map(location => {
           return (
             <MiniMap

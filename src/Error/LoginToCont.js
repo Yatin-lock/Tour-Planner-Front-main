@@ -50,7 +50,7 @@ function LoginToCont() {
                 </div>
 
                 <div class="btnposi">
-                    <button class="btn" onClick={handleClick}>Back to Home</button>
+                    <button class="btn1" onClick={handleClick}>Back to Home</button>
                 </div>
 
             </body>
