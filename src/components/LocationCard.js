@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -36,7 +36,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-function LocationCard({ name, description, id }) {
+function LocationCard({ name, description, id, user}) {
   const [ratings, setRating] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const [ratingVal, setRatingVal] = useState(0);
@@ -103,7 +103,7 @@ function LocationCard({ name, description, id }) {
     const netRating = {
       rating: ratingVal,
       desc: descVal,
-      user: 'test',
+      user: curUser,
       id: id
     }
     setDescVal("");
@@ -127,7 +127,26 @@ function LocationCard({ name, description, id }) {
       })
     getRating()
   }
-  React.useEffect(() => {
+  const [isLoggedIn,setisLoggedIn] = useState(false); 
+  const [curUser,setUser] = useState("test");
+  async function getUser(){
+      await Axios({
+        method: "GET",
+        withCredentials: true,
+        url: "http://localhost:4000/getUser"
+      })
+      .then(res=>{
+        setisLoggedIn(res.data.loggedIn);
+        setUser(res.data.user);
+      })
+      .catch(err=>{
+        console.log(err);
+        setisLoggedIn(false);
+      })
+    }  
+  useEffect(() => {
+    console.log(curUser);
+    getUser();
     getRating();
   }, [])
 
@@ -163,7 +182,7 @@ function handleLoading(){
             </IconButton>
           }
           title={name}
-          subheader="September 14, 2016"
+          subheader={`posted by ${user}`}
         />
         <CardMedia
           component="img"
@@ -217,7 +236,7 @@ function handleLoading(){
                   variant="filled"
                 />
               </div>
-              <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth >Submit</Button>
+              <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth disabled={!isLoggedIn}>Submit</Button>
               <Typography>{displayRatings()}</Typography>
             </Typography>
           </CardContent>

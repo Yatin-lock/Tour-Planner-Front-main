@@ -29,7 +29,7 @@ function Location(){
     },[])
     return(
         <div className ="row col-lg-11 col-sm-12">
-            <LocationCard name={location.name} description={location.description} id = {location.id} />
+            <LocationCard name={location.name} description={location.description} id = {location.id} user={location.user} />
         </div>
     )
 }   
