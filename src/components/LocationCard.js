@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -103,7 +103,7 @@ function LocationCard({ name, description, id, user}) {
     const netRating = {
       rating: ratingVal,
       desc: descVal,
-      user: 'test',
+      user: curUser,
       id: id
     }
     setDescVal("");
@@ -127,7 +127,26 @@ function LocationCard({ name, description, id, user}) {
       })
     getRating()
   }
-  React.useEffect(() => {
+  const [isLoggedIn,setisLoggedIn] = useState(false); 
+  const [curUser,setUser] = useState("test");
+  async function getUser(){
+      await Axios({
+        method: "GET",
+        withCredentials: true,
+        url: "http://localhost:4000/getUser"
+      })
+      .then(res=>{
+        setisLoggedIn(res.data.loggedIn);
+        setUser(res.data.user);
+      })
+      .catch(err=>{
+        console.log(err);
+        setisLoggedIn(false);
+      })
+    }  
+  useEffect(() => {
+    console.log(curUser);
+    getUser();
     getRating();
   }, [])
   return (
@@ -199,7 +218,7 @@ function LocationCard({ name, description, id, user}) {
                   variant="filled"
                 />
               </div>
-              <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth >Submit</Button>
+              <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth disabled={!isLoggedIn}>Submit</Button>
               <Typography>{displayRatings()}</Typography>
             </Typography>
           </CardContent>

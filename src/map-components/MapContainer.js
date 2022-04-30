@@ -1,6 +1,7 @@
 import Map from './Map'
 import  Axios  from 'axios';
 import { useEffect, useState } from 'react'; 
+import LoginToCont from './Error/LoginToCont';
 function MapContainer(){
     const [isLoggedIn,setisLoggedIn] = useState(false); 
     const [user,setUser] = useState("test");
@@ -26,6 +27,7 @@ function MapContainer(){
     return(
         <div>
             {isLoggedIn&& <Map user={user}></Map>}
+            {!isLoggedIn&& <LoginToCont/>}
         </div>
 
     )
