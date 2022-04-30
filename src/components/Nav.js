@@ -30,7 +30,7 @@ function Nav() {
 
   return (
     <div>
-      <nav class="nav " style={{ width: "80%" }}>
+      <nav class="nav " style={{ width: "75%" }}>
         <div class="container">
           <div class="logo">
             <a>Your Logo</a>
