@@ -1,4 +1,10 @@
 import React, { useRef, useEffect, useState }from 'react'
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import './MiniMap.css'
 import {Link,useHistory} from 'react-router-dom';
@@ -58,19 +64,27 @@ if(latitude&&longitude){
     history.push(`/map/${id}`);
    }
   return (
-      <div className="card d-inline-block MiniMap col-lg-4 col-md-4 col-sm-10 mb-2">
-        <div className="card-img-top d-flex justify-content-center">
+      <div  >
+      
+          <Card sx={{ maxWidth: 345 }}>
+          <div className="card-img-top d-flex justify-content-center">
           <div ref={mapContainer} className="mini-map-container"/>
         </div>
-        <div className="card-body">
-          <h5 className="card-title">{location || "Poof !! nothing to show here"}</h5>
-
-          <p className="card-text">{description||"No description to show!"}</p>
-          <div>
-            <button className="btn btn-primary " onClick={handleOnClick} disabled={!(longitude&&latitude)}>Reposition</button>
-            <button className="btn btn-primary ml-5" onClick={handleOnClickView} disabled={!(longitude&&latitude)}  >View</button>
-          </div>
-        </div>
+      <CardContent >
+        <Typography gutterBottom variant="h5" component="div" >
+        <h3 className="card-title">{location || "Poof !! nothing to show here"}</h3>
+        </Typography>
+        <Typography style={{textAlign:"left"}}variant="body2" color="text.secondary">
+        <p className="card-text">{description||"No description to show!"}</p>
+        </Typography>
+      </CardContent>
+      
+      <CardActions style={{justifyContent:"center"}}>
+        <Button size="large" onClick={handleOnClick} disabled={!(longitude&&latitude)}>Reposition</Button>
+        <Button size="large" onClick={handleOnClickView} disabled={!(longitude&&latitude)} >View</Button>
+      </CardActions>
+      </Card>
+        
       </div>
     
   );

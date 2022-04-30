@@ -3,9 +3,10 @@ import Axios from 'axios';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import MapboxGeocoder from 'mapbox-gl-geocoder';
 import MiniMap from './MiniMap'
+
 // import { styled } from '@mui/material/styles';
 import './MapContainer.css'
-import { TextField, Button, Paper, } from '@mui/material';
+import { TextField, Button, Paper, Typography, } from '@mui/material';
 import {useHistory } from 'react-router-dom';
 mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
 
@@ -171,7 +172,7 @@ function Map() {
   // a component did update for map movend method future dev
   function availablePlaces(locs) {
     return (
-      <div className="row col-lg-11 col-sm-12">
+      <div className="row col-lg-11 col-sm-12" >
         {locs.map(location => {
           return (
             <MiniMap
@@ -195,18 +196,18 @@ function Map() {
         </div>
         <div className="ml-3">
           <div>
-            <button onClick={handleClickLocs} disabled={getLocs} className="ml-md-0 ml-sm-0" >Get Locations</button>
+            <Button onClick={handleClickLocs} disabled={getLocs}  variant="contained">Get Locations</Button>
           </div>
-          <div>
+          <Typography style={{padding:"10px",fontWeight:"700",fontSize:"15px"}} >
             <a href="/map" className="ml-0">Want to search for another location? Click here to get fresh locations</a>
-          </div>
+          </Typography>
         </div>
 
         <div className="d-flex justify-content-center row">
           {getLocs && availablePlaces(availableLocs)}
         </div>
         <div>
-          {!isAddLoc && <button onClick={handleClickAddLoc} >Refer your current location</button>}
+          {!isAddLoc && <Button onClick={handleClickAddLoc} variant="contained">Refer your current location</Button>}
           {isAddLoc &&
             <div>
               <Paper elevation={10} style={paperStyle}>

@@ -17,7 +17,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Rating from '@mui/material/Rating'
-import { Button, Paper, Snackbar, TextField } from '@mui/material';
+import { AccordionDetails, Button, Paper, Snackbar, TextField } from '@mui/material';
 import Axios from "axios";
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -130,7 +130,25 @@ function LocationCard({ name, description, id }) {
   React.useEffect(() => {
     getRating();
   }, [])
+
+const [imageSelected,setImageSelected]=useState("");
+const [loaded,setLoaded]=useState(false);
+const uploadImage=()=>{
+  
+  const formData=new FormData()
+  formData.append("file",imageSelected);
+  formData.append("upload_preset","kzcpfrtm")
+  Axios.post("https://api.cloudinary.com/v1_1/dm0ingrek/image/upload",formData).then((response)=>{
+    console.log(response);
+  })
+}
+function handleLoading(){
+  setLoaded(false);
+}
+
+
   return (
+    <div>
     <Paper style={paperStyle} className="d-flex justify-content-center">
       <Card sx={{ maxWidth: 345 }} className="row col-lg-11 col-sm-12 m-5">
         <CardHeader
@@ -205,19 +223,31 @@ function LocationCard({ name, description, id }) {
           </CardContent>
         </Collapse>
       </Card>
-      <div className='mr-5'>
-        Upload images
-        <form>
-          <input type="file" />
-        </form>
-      </div>
+   
       <Snackbar
         open={isAdded}
         autoHideDuration={6000}
         onClose={handleClose}
         message="Review posted"
         action={action} />
+        
+         
     </Paper>
+     <div className='mr-5'>
+      
+        
+        <form>
+          <input type="file" onChange={(event)=>{setImageSelected(event.target.files[0])}}/>
+          <Button variant="contained" onClick={uploadImage}>Upload Image</Button>
+          <Snackbar
+        open={loaded}
+        autoHideDuration={6000}
+        onClose={handleLoading}
+        message="Review posted"
+        action={action} />
+        </form>
+      </div>
+    </div>
   );
 }
 
