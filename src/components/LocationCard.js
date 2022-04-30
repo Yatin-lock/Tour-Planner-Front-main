@@ -36,7 +36,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-function LocationCard({ name, description, id }) {
+function LocationCard({ name, description, id, user}) {
   const [ratings, setRating] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const [ratingVal, setRatingVal] = useState(0);
@@ -145,7 +145,7 @@ function LocationCard({ name, description, id }) {
             </IconButton>
           }
           title={name}
-          subheader="September 14, 2016"
+          subheader={`posted by ${user}`}
         />
         <CardMedia
           component="img"

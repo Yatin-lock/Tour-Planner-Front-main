@@ -9,7 +9,7 @@ import { TextField, Button, Paper, } from '@mui/material';
 import {useHistory } from 'react-router-dom';
 mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
 
-function Map() {
+function Map({user}) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const paperStyle = { padding: 20, height: '60vh', width: 320, margin: "20px auto" }
@@ -153,7 +153,8 @@ function Map() {
           type:'Point',
           coordinates:[lng,lat],
         },
-        description:desc
+        description:desc,
+        user:user
       },
       url:"http://localhost:4000/add/locations"
     })
