@@ -40,6 +40,7 @@ function Nav() {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/login">Login</Link></li>
               <li><Link to="/register">Register</Link></li>
+              <li><Link to="/map">Map</Link></li>
             </ul>
           </div>
           <span className={isActive ? "navTrigger" : "active navTrigger"} onClick={toggleClass}>

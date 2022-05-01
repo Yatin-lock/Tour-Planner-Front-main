@@ -3,17 +3,18 @@ import Axios from 'axios';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import MapboxGeocoder from 'mapbox-gl-geocoder';
 import MiniMap from './MiniMap'
+import LoginNav from '../components/LoginNav';
 
 // import { styled } from '@mui/material/styles';
 import './MapContainer.css'
 import { TextField, Button, Paper, Typography, } from '@mui/material';
-import {useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 mapboxgl.accessToken = process.env.REACT_APP_API_KEY;
 
-function Map({user}) {
+function Map({ user }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const paperStyle = { padding: 20, height: '60vh', width: 320, margin: "20px auto" }
+  const paperStyle = { padding: 20, height: '60vh', width: 470, margin: "20px auto" }
   const [lng, setLng] = useState(72.8777);
   const [lat, setLat] = useState(19.0760);
   const [zoom, setZoom] = useState(9);
@@ -143,29 +144,29 @@ function Map({user}) {
   function handleChangeDesc(e) {
     setDesc(e.target.value);
   }
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault();
     Axios({
-      method:"POST",
-      withCredentials:true,
-      data:{
+      method: "POST",
+      withCredentials: true,
+      data: {
         location: locName,
-        geometry:{
-          type:'Point',
-          coordinates:[lng,lat],
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat],
         },
-        description:desc,
-        user:user
+        description: desc,
+        user: user
       },
-      url:"http://localhost:4000/add/locations"
+      url: "http://localhost:4000/add/locations"
     })
-    .then(res=>{
-      if(res.data.authenticated){
-        history.push(`/map/${res.data.id}`)
-      }else{
-        // console.log(res.data.msg);
-      }
-    })
+      .then(res => {
+        if (res.data.authenticated) {
+          history.push(`/map/${res.data.id}`)
+        } else {
+          // console.log(res.data.msg);
+        }
+      })
     setLocName("");
     setDesc("");
     setAddLoc(false);
@@ -190,37 +191,43 @@ function Map({user}) {
     )
   }
   return (
-    <div className="d-flex justify-content-center">
-      <div>
-        <div className="MapContainer">
-          <div ref={mapContainer} className="map-container" />
-        </div>
-        <div className="ml-3">
-          <div>
-            <Button onClick={handleClickLocs} disabled={getLocs}  variant="contained">Get Locations</Button>
-          </div>
-          <Typography style={{padding:"10px",fontWeight:"700",fontSize:"15px"}} >
-            <a href="/map" className="ml-0">Want to search for another location? Click here to get fresh locations</a>
-          </Typography>
-        </div>
-
-        <div className="d-flex justify-content-center row">
-          {getLocs && availablePlaces(availableLocs)}
-        </div>
+    <div>
+      
+      <div className="d-flex justify-content-center">
         <div>
-          {!isAddLoc && <Button onClick={handleClickAddLoc} variant="contained">Refer your current location</Button>}
-          {isAddLoc &&
+          <div className="MapContainer">
+            <div ref={mapContainer} className="map-container" />
+          </div>
+          <div className="ml-3">
             <div>
-              <Paper elevation={10} style={paperStyle}>
-                <TextField value={lng} fullWidth disabled />
-                <TextField value={lat} fullWidth disabled />
-                <TextField label='location' placeholder='location name' fullWidth onChange={handleChange}
-                  value={locName} />
-                <TextField label='description' value={desc} placeholder='Description' fullWidth required onChange={handleChangeDesc} className="mb-1" />
-                 <Button type='submit' onClick={handleSubmit} color='primary' variant="contained" style={btnstyle} fullWidth>Submit</Button>
-              </Paper>
+              <Button onClick={handleClickLocs} disabled={getLocs} variant="contained">Get Locations</Button>
             </div>
-          }
+            <Typography style={{ padding: "10px", fontWeight: "700", fontSize: "15px" }} >
+              <a href="/map" className="ml-0">Want to search for another location? Click here to get fresh locations</a>
+            </Typography>
+          </div>
+
+          <div className="d-flex justify-content-center row">
+            {getLocs && availablePlaces(availableLocs)}
+          </div>
+          <div>
+            {!isAddLoc && <Button onClick={handleClickAddLoc} variant="contained">Refer your current location</Button>}
+            {isAddLoc &&
+              <div>
+                <Paper elevation={10} style={paperStyle}>
+                <Typography paragraph>
+                  Location Refferal Form
+                </Typography>
+                  <TextField value={lng} fullWidth disabled />
+                  <TextField value={lat} fullWidth disabled />
+                  <TextField label='location' placeholder='location name' fullWidth onChange={handleChange}
+                    value={locName} />
+                  <TextField label='description' value={desc} placeholder='Description' fullWidth required onChange={handleChangeDesc} className="mb-1" />
+                  <Button type='submit' onClick={handleSubmit} color='primary' variant="contained" style={btnstyle} fullWidth>Submit</Button>
+                </Paper>
+              </div>
+            }
+          </div>
         </div>
       </div>
     </div>

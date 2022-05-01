@@ -17,9 +17,10 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Rating from '@mui/material/Rating'
-import { AccordionDetails, Button, Paper, Snackbar, TextField } from '@mui/material';
+import { Button, Paper, Snackbar, TextField } from '@mui/material';
 import Axios from "axios";
 import CloseIcon from '@mui/icons-material/Close';
+import CommentIcon from '@mui/icons-material/Comment';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -36,7 +37,8 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-function LocationCard({ name, description, id, user}) {
+function LocationCard({ name, description, id, user,url}) {
+  const [imgUrl,setImgUrl] = useState(url);
   const [ratings, setRating] = useState([]);
   const [expanded, setExpanded] = useState(false);
   const [ratingVal, setRatingVal] = useState(0);
@@ -44,7 +46,8 @@ function LocationCard({ name, description, id, user}) {
   const [isAdded, setIsAdded] = useState(false);
   const btnstyle = { margin: '8px 0' }
   const paperStyle = { padding: 20, height: 'fit-content', width: '70vw', margin: "20px auto" }
-  const handleExpandClick = () => {
+  const handleExpandClick = async() => {
+    await getRating();
     setExpanded(!expanded);
   };
   function handleClose() {
@@ -65,22 +68,6 @@ function LocationCard({ name, description, id, user}) {
       </IconButton>
     </React.Fragment>
   );
-  const getRating = (() => {
-    Axios({
-      method: "POST",
-      withCredentials: true,
-      data: {
-        id: id
-      },
-      url: "http://localhost:4000/getRating"
-    })
-      .then(res => {
-        setRating(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  })
   function displayRatings() {
     return (
       <Typography>
@@ -125,10 +112,28 @@ function LocationCard({ name, description, id, user}) {
       .catch(err => {
         console.log(err)
       })
-    getRating()
+      getRating()
   }
   const [isLoggedIn,setisLoggedIn] = useState(false); 
   const [curUser,setUser] = useState("test");
+  async function getRating(){
+    await Axios({
+      method: "POST",
+      withCredentials: true,
+      data: {
+        id: id
+      },
+      url: "http://localhost:4000/getRating"
+    })
+      .then(res => {
+        console.log(res.data);
+        setRating(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      console.log(ratings)
+    }
   async function getUser(){
       await Axios({
         method: "GET",
@@ -145,31 +150,47 @@ function LocationCard({ name, description, id, user}) {
       })
     }  
   useEffect(() => {
-    console.log(curUser);
+    setImgUrl(url);
     getUser();
-    getRating();
   }, [])
 
 const [imageSelected,setImageSelected]=useState("");
 const [loaded,setLoaded]=useState(false);
-const uploadImage=()=>{
-  
+const uploadImage=async ()=>{
   const formData=new FormData()
   formData.append("file",imageSelected);
   formData.append("upload_preset","kzcpfrtm")
-  Axios.post("https://api.cloudinary.com/v1_1/dm0ingrek/image/upload",formData).then((response)=>{
-    console.log(response);
+  // Axios.withCredentials = false;
+  console.log(id);
+  await Axios.post("https://api.cloudinary.com/v1_1/dm0ingrek/image/upload",formData).then(async (res)=>{
+    console.log(id,res.data.url);
+    setImgUrl(res.data.url);
+    await Axios({
+      method:"POST",
+      url: "http://localhost:4000/add/image",
+      data:{
+        url:res.data.url,
+        id: id
+      }
+    })
+    .then(response=>{
+      console.log(res.data.url);
+      if(!imgUrl)setImgUrl(res.data.url);
+      if(response.authenticated)
+        setLoaded(true);
+    })
+  })
+  .catch(err=>{
+    console.log(err);
   })
 }
 function handleLoading(){
   setLoaded(false);
 }
-
-
   return (
     <div>
     <Paper style={paperStyle} className="d-flex justify-content-center">
-      <Card sx={{ maxWidth: 345 }} className="row col-lg-11 col-sm-12 m-5">
+      <Card sx={{ maxWidth: 500 }} className="row col-lg-11 col-sm-12 m-5">
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -187,7 +208,7 @@ function handleLoading(){
         <CardMedia
           component="img"
           height="194"
-          image="https://districts.ecourts.gov.in/sites/default/files/u806/rohini.JPG"
+          image={imgUrl || url || "https://districts.ecourts.gov.in/sites/default/files/u806/rohini.JPG" }
           alt="Paella dish"
         />
         <CardContent>
@@ -205,7 +226,7 @@ function handleLoading(){
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <ExpandMoreIcon />
+            <CommentIcon/>
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -237,6 +258,7 @@ function handleLoading(){
                 />
               </div>
               <Button type='submit' onClick={onSubmit} color='primary' variant="contained" style={btnstyle} fullWidth disabled={!isLoggedIn}>Submit</Button>
+                <Typography paragraph style={{fontSize:'20px'}}>Comments</Typography>
               <Typography>{displayRatings()}</Typography>
             </Typography>
           </CardContent>
@@ -247,23 +269,13 @@ function handleLoading(){
         open={isAdded}
         autoHideDuration={6000}
         onClose={handleClose}
-        message="Review posted"
+        message="review posted"
         action={action} />
-        
-         
     </Paper>
      <div className='mr-5'>
-      
-        
         <form>
           <input type="file" onChange={(event)=>{setImageSelected(event.target.files[0])}}/>
-          <Button variant="contained" onClick={uploadImage}>Upload Image</Button>
-          <Snackbar
-        open={loaded}
-        autoHideDuration={6000}
-        onClose={handleLoading}
-        message="Review posted"
-        action={action} />
+          <Button variant="contained" onClick={uploadImage} disabled={url&&imgUrl}>Upload Image</Button>
         </form>
       </div>
     </div>

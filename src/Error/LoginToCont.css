@@ -1,12 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@600&display=swap");
-body {
+
+.login-to-cont{
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100vh;
-  color: #6004d6;
+  color: #fff;
+  background: rgb(0,37,45);
+  background: linear-gradient(90deg, rgba(0,37,45,1) 11%, rgba(9,9,121,1) 50%, rgba(0,30,36,1) 90%);
 }
-
 
 .container {
   position: absolute;

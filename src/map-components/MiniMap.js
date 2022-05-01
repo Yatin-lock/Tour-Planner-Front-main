@@ -65,8 +65,7 @@ function MiniMap({ longitude, latitude, location, description, id }) {
   }
   return (
     <div className='col-lg-4 d-inline-block mb-3'>
-
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 350 }} >
         <div className="card-img-top d-flex justify-content-center">
           <div ref={mapContainer} className="mini-map-container" />
         </div>
